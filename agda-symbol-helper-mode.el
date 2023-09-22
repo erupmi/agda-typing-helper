@@ -1,11 +1,12 @@
 ;;; agda-symbol-helper-mode.el --- Minor mode for finding unicode typing method for Agda -*- lexical-binding: t; -*-
+(require 'dash)
 
 (defvar mu-agda-last-post-command-position 0
   "Holds the cursor position fromthe last run of post-command-hooks.")
 
 (make-variable-buffer-local 'mu-agda-last-post-command-position)
 
-(defun mu-agda-unciode-helper-if-moved ()
+(defun mu-agda-unciode-helper-if-moved-hook ()
   "Output unicode input method if I moved."
   (defun mu-agda-unicode-input-helper ()
     "Get the current unicode input method."
@@ -27,11 +28,10 @@
 ;;;###autoload
 (define-minor-mode agda-symbol-helper-mode
   "Show the typing of an Agda unicode symbol in minibuffer"
-  :lighter " agda-symbol-helper")
+  :lighter " agda-symbol-helper"
 
-;;;###autoload
-(add-hook 'agda2-mode-hook
-          (lambda ()
-            (add-to-list 'post-command-hook #'mu-agda-unciode-helper-if-moved)))
+  (if agda-symbol-helper-mode
+      (add-to-list 'post-command-hook #'mu-agda-unciode-helper-if-moved-hook)
+    (setq post-command-hook (remove 'mu-agda-unciode-helper-if-moved-hook post-command-hook))))
 
 (provide 'agda-symbol-helper-mode)
