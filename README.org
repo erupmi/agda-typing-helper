@@ -1,0 +1,10 @@
+* agda-symbol-helper-mode
+
+** About
+
+This mode will echo the unicode typing method in Emacs minibuffer
+
+** Usage
+
+Simply invoke =agda-symbol-helper-mode= in =M-x= or hook after agda2-mode by
+=(add-hook 'agda2-mode-hook 'agda-symbol-helper-mode)=.
